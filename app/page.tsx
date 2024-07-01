@@ -1,3 +1,4 @@
+import ImageGallery from "@/components/image-gallery";
 import Link from "next/link";
 
 export default function Home() {
@@ -11,7 +12,7 @@ export default function Home() {
 
         <hr />
 
-        <h2 className="text-2xl font-bold text-slate-600 mb-4 mt-4">Galeria de fotos</h2>
+        <ImageGallery />
       </main>
 
       <footer className="bg-slate-600 py-4 w-full font-light text-white text-center">Feito por: <Link href={"https://github.com/Peedrohenrique"} target="_blank">Pedro henrique</Link></footer>
