@@ -32,7 +32,7 @@ const imageList = objectList.Contents?.map((object) => object.Key as string);
                             width={300}
                             height={300}
                             alt="images"
-                            src={process.env.AWS_PATH_IMAGE + image}
+                            src={`https://foto-upload.s3.us-east-2.amazonaws.com/${image}`}
                             />
                         </div>
                     </div>
