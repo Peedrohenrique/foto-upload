@@ -1,25 +1,21 @@
 import Image from "next/image";
-import { S3Client, ListObjectsV2Command } from "@aws-sdk/client-s3";
+import { s3Client } from "@/lib/s3client";
+import { ListObjectsV2Command } from "@aws-sdk/client-s3";
 
 export default async function ImageGallery() {
-
-    const s3Client = new S3Client({ 
-        region: "us-east-2",
-        credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string
-        }
-    });
-
     const objectListParams = new ListObjectsV2Command({
         Bucket: 'foto-upload'
     });
 
-    
    const objectList = await s3Client.send(objectListParams);
+   objectList.Contents?.sort((a: any, b: any) => {
+    return (
+        new Date(b.LastModified).getTime() - new Date(a.LastModified).getTime()
+    )
+   })
+   
+   const imageList = objectList.Contents?.map((object) => object.Key as string);
 
-      
-const imageList = objectList.Contents?.map((object) => object.Key as string);
     return (
         <>
             <h2 className="text-2xl font-bold text-slate-600 mb-4 mt-4">Galeria de fotos</h2>

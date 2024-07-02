@@ -1,3 +1,4 @@
+import { uploadImage } from "@/actions/actions";
 import ImageGallery from "@/components/image-gallery";
 import Link from "next/link";
 
@@ -10,6 +11,10 @@ export default function Home() {
           <p className="text-gray-500 mb-8 font-light">Galeria de fotos Next.js, upload de imagens e S3</p>
         </header>
 
+        <form action={uploadImage} className="my-8">
+          <input type="file" name="image" id="image" />
+          <button className="p-2 bg-slate-600 text-white font-bold rounded">Enviar Imagem</button>
+        </form>
         <hr />
 
         <ImageGallery />
