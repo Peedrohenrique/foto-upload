@@ -8,7 +8,10 @@ export async function uploadImage(formData: FormData){
     const image = formData.get('image') as File;
 
     if(!image.size) {
-        throw new Error('Nenhuma imagem adicionada!');
+        return {
+            success: false,
+            message: 'Você precisa enviar alguma arquivo.'
+        }
     }
 
     const arrayBuffer = await image.arrayBuffer();
@@ -21,7 +24,16 @@ export async function uploadImage(formData: FormData){
         ContentType: 'image/jpeg'
     });
 
-    await s3Client.send(putObjectParams);
-
-    revalidatePath('/')
+    try {
+        await s3Client.send(putObjectParams);
+        revalidatePath('/')
+        return {
+            success: true,
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: 'Alguma coisa deu errado'
+        }
+    }
 }
