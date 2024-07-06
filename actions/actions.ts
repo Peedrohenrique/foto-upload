@@ -1,6 +1,6 @@
 'use server'
 import { s3Client } from "@/lib/s3client";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
 import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 
@@ -11,6 +11,27 @@ export async function uploadImage(formData: FormData){
         return {
             success: false,
             message: 'Você precisa enviar alguma arquivo.'
+        }
+    }
+
+    if(!image.type.startsWith('image/')) {
+        return {
+            success: false,
+            message: 'Formato inválido Envie uma imagem.'
+        }
+    }
+
+    if(image.size > 2 * 1024 * 1024) {
+        return {
+            success: false,
+            message: 'Imagem muito grande. A imagem não pode ser maior que 2MB.'
+        }
+    }
+
+    if(await tooManyImages()) {
+        return {
+            success: false,
+            message: 'Você já enviou o máximo de imagens permitidas.'
         }
     }
 
@@ -35,5 +56,20 @@ export async function uploadImage(formData: FormData){
             success: false,
             message: 'Alguma coisa deu errado'
         }
+    }
+}
+
+async function tooManyImages() {
+
+    const listObjectParams = new ListObjectsV2Command({
+        Bucket: 'foto-upload'
+    });
+
+    const object = await s3Client.send(listObjectParams);
+
+    if((object.Contents?.length ?? 0) > 2) {
+        return true;
+    } else {
+        return false;
     }
 }

@@ -11,7 +11,7 @@ export default function UploadForm() {
         if (response.success) {
             toast.success('Imagem enviada com sucesso!');
         } else {
-            toast.error('Opss... algo deu errado!');
+            toast.error('Ops... ' + response.message as string);
         }
     }
 
