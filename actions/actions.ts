@@ -1,6 +1,6 @@
 'use server'
 import { s3Client } from "@/lib/s3client";
-import { ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, ListObjectsV2Command, PutObjectCommand } from "@aws-sdk/client-s3";
 import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 
@@ -67,9 +67,20 @@ async function tooManyImages() {
 
     const object = await s3Client.send(listObjectParams);
 
-    if((object.Contents?.length ?? 0) > 2) {
+    if((object.Contents?.length ?? 0) > 20) {
         return true;
     } else {
         return false;
     }
+}
+
+export async function deleteImage(key: string) {
+
+    const deleteObjectParams = new DeleteObjectCommand({
+    Bucket: 'foto-upload',
+    Key: key
+})
+await s3Client.send(deleteObjectParams)
+
+revalidatePath('/')
 }

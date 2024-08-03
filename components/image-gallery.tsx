@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { s3Client } from "@/lib/s3client";
 import { ListObjectsV2Command } from "@aws-sdk/client-s3";
+import { deleteImage } from "@/actions/actions";
 
 export default async function ImageGallery() {
     const objectListParams = new ListObjectsV2Command({
@@ -23,6 +24,14 @@ export default async function ImageGallery() {
                 {imageList?.map((image, index) => (
                     <div key={index} className="rounded-md overflow-hidden shadow-md bg-white h-[280px] w-[280px]">
                         <div className="w-[90%] h-[90%] mx-auto mt-[5%]">
+                            <form action={async() => {
+                                'use server';
+                                await deleteImage(image ?? '')
+                            }}>
+                            <button className='bg-red-50 text-red-700 p-4 rounded'>
+                                Apagar Imagem
+                            </button>
+                            </form>
                             <Image
                             className="w-full h-full object-cover"
                             width={300}
