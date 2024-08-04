@@ -23,8 +23,11 @@ export default async function ImageGallery() {
             <div className="grid grid-cols-3 gap-4">
                 {imageList?.map((image, index) => (
                     <div key={index} className="rounded-md overflow-hidden shadow-md bg-white h-[280px] w-[280px]">
-                        <div className="w-[90%] h-[90%] mx-auto mt-[5%]">
-                           <DeleteImage imageKey={image}/>
+                        <div className="relative transition-colors group w-[90%] h-[90%] mx-auto mt-[5%]">
+                            
+                            <div className="absolute transition-colors group-hover:visible invisible flex items-center justify-center inset-0 group-hover:bg-gray-800 group-hover:bg-opacity-60">
+                                <DeleteImage imageKey={image}/>
+                            </div>
                             <Image
                             className="w-full h-full object-cover"
                             width={300}

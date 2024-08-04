@@ -2,6 +2,7 @@
 
 import { deleteImage } from "@/actions/actions";
 import toast from "react-hot-toast";
+import { BiTrash } from "react-icons/bi";
 
 export default function DeleteImage({imageKey}: {imageKey: string}) {
 
@@ -15,7 +16,8 @@ export default function DeleteImage({imageKey}: {imageKey: string}) {
             }
         }}>
         <button className='bg-red-50 text-red-700 p-4 rounded'>
-            Apagar Imagem
+           <BiTrash className="w-6 h-6"/>
+            
         </button>
         </form>
     )
