@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Galeria de Fotos com Upload para Amazon S3
 
-## Getting Started
+Este projeto é uma galeria de fotos simples desenvolvida com o objetivo de permitir o upload direto para o Amazon S3 (AWS) utilizando Next.js, React e TailwindCSS. A integração com a biblioteca de upload Uppy facilita a interação dos usuários, permitindo que eles arrastem e soltem imagens na interface para realizar uploads e visualizar as imagens já armazenadas no S3.
 
-First, run the development server:
+## Tecnologias Utilizadas
+
+- **Next.js:** Utilizado para criar uma aplicação React server-side renderizada.
+- **React:** Biblioteca JavaScript para construção de interfaces de usuário.
+- **TailwindCSS:** Framework CSS utilizado para estilização com classes utilitárias.
+- **Uppy:** Biblioteca JavaScript para upload de arquivos, utilizada para facilitar o processo de upload de imagens.
+- **AWS S3:** Serviço de armazenamento de objetos da Amazon Web Services, utilizado para armazenar as imagens enviadas pelos usuários.
+
+## Funcionalidades Principais
+
+- Upload de imagens diretamente para o Amazon S3.
+- Arrastar e soltar imagens na interface para facilitar o processo de upload.
+- Visualização das imagens já armazenadas no S3 na galeria da aplicação.
+- Layout responsivo utilizando TailwindCSS, otimizado para diferentes dispositivos.
+
+## Como Executar o Projeto Localmente
+
+Para executar este projeto localmente, siga estas instruções:
+
+1. **Clone o repositório:**
+
+   ```bash
+   git clone https://github.com/Peedrohenrique/foto-upload.git
+   cd foto-upload
+
+2. **Instale as dependências:**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   npm install
+    # ou
+   yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Configure as variáveis de ambiente:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+   Renomeie o arquivo .env.example para .env.local e 
+   configure as variáveis necessárias, como as credenciais da AWS S3.
+```
+4. **Inicie o servidor de desenvolvimento:**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+   npm run dev
+   # ou
+   yarn dev
+```
 
-## Learn More
+5. **Acesse a aplicação no navegador:**
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+  Abra http://localhost:3000 no seu navegador para visualizar a aplicação.
+```
