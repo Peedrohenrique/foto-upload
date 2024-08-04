@@ -1,6 +1,6 @@
-import { uploadImage } from "@/actions/actions";
 import ImageGallery from "@/components/image-gallery";
-import UploadForm from "@/components/upload-form";
+//import UploadForm from "@/components/upload-form";
+import UppyUpload from "@/components/uppy-upload";
 import Link from "next/link";
 
 export default function Home() {
@@ -12,7 +12,8 @@ export default function Home() {
           <p className="text-gray-500 mb-8 font-light">Galeria de fotos Next.js, upload de imagens e S3</p>
         </header>
 
-        <UploadForm />
+        <UppyUpload />
+        {/* <UploadForm /> */}
 
         <hr />
 

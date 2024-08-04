@@ -63,6 +63,63 @@ export async function uploadImage(formData: FormData) {
   }
 }
 
+export async function uploadWithUppy(formData: FormData) {
+  const images: File[] = formData.getAll('images') as File[];
+
+  images.forEach((image) => {
+    if (!image.size) {
+      return {
+        success: false,
+        message: "Você precisa enviar alguma arquivo.",
+      };
+    }
+  })
+
+  if (!images[0].type.startsWith("image/")) {
+    return {
+      success: false,
+      message: "Formato inválido Envie uma imagem.",
+    };
+  }
+
+  if (images[0].size > 2 * 1024 * 1024) {
+    return {
+      success: false,
+      message: "Imagem muito grande. A imagem não pode ser maior que 2MB.",
+    };
+  }
+
+  if (await tooManyImages()) {
+    return {
+      success: false,
+      message: "Você já enviou o máximo de imagens permitidas.",
+    };
+  }
+
+  const promises = images.map(async (image) => {
+
+    const arrayBuffer = await image.arrayBuffer();
+    const imageBuffer = Buffer.from(arrayBuffer);
+    
+    const putObjectParams = new PutObjectCommand({
+      Bucket: "foto-upload",
+      Key: nanoid() + ".jpg",
+      Body: imageBuffer,
+      ContentType: "image/jpeg",
+    });
+
+    
+    return s3Client.send(putObjectParams);
+  });
+
+  await Promise.all(promises);
+  revalidatePath("/");
+
+  return {
+    success: true,
+  };
+}
+
 async function tooManyImages() {
   const listObjectParams = new ListObjectsV2Command({
     Bucket: "foto-upload",
